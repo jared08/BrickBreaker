@@ -1,0 +1,88 @@
+import sofia.micro.*;
+
+//-------------------------------------------------------------------------
+/**
+ *  The Bar class creates a bar object that moves back and forth through 
+ *  the world at varying speeds, as well as handling power ups.
+ *
+ *  @author jared-jared08
+ *  @version 2013.05.02
+ */
+public class Bar extends Actor
+{
+    //~ Fields ................................................................
+    private double speed = 0;    
+    //~ Constructor ...........................................................
+
+    // ----------------------------------------------------------
+    /**
+     * Creates a new Bar object.
+     */
+    public Bar()
+    {
+        speed = 0;
+    }
+    
+    /**
+     * The act() method moves the bar throughout the world
+     * at varying speeds based upon called methods. If the bar
+     * intersects with a power up, the act() method will add a new
+     * bar based on the power up, as well as remove the power up and
+     * the current bar.
+     */
+    public void act()
+    {
+        this.move((int) speed);         
+        speed = 0;      
+        Bigbar bigbar = new Bigbar();
+        Smallbar smallbar = new Smallbar();        
+        Good good = this.getOneIntersectingObject(Good.class);
+        if (good != null)
+        {
+            getWorld().add(bigbar, getGridX(), getGridY());
+            good.remove();             
+            this.remove();            
+        }
+        if (good == null)
+        {
+            Bad bad = this.getOneIntersectingObject(Bad.class);
+            if (bad != null)
+            {
+                getWorld().add(smallbar, getGridX(), getGridY());
+                bad.remove();            
+                this.remove();             
+            }   
+        }        
+    }
+    
+    /**
+     * Sets the speed of the bar to 10 if dpadEastIsDown. Also
+     * if part of the bar goes out of the world it will set the
+     * speed to 0.
+     */
+    public void dpadEastIsDown()
+    {
+        speed = 12;
+        if (this.getGridX() > 965)
+        {
+            speed = 0;
+        }
+    }
+    
+    /**
+     * Sets the speed of the bar to -10 if dpadWestIsDown. Also
+     * if part of the bar goes out of the world it will set the
+     * speed to 0.
+     */
+    public void dpadWestIsDown()
+    {
+        speed = -12;
+        if (this.getGridX() < 35)
+        {
+            speed = 0;
+        }
+    }
+
+    //~ Methods ...............................................................
+
+}
