@@ -1,0 +1,32 @@
+import sofia.micro.*;
+
+//-------------------------------------------------------------------------
+/**
+ *  No work is needed to be done in this class, because it is a subclass
+ *  of the bar class, and simply inherits all of its traits.
+ *
+ *  @author jared-jared08
+ *  @version 2013.05.02
+ */
+public class Bigbar extends Bar
+{
+    //~ Fields ................................................................
+
+
+
+    //~ Constructor ...........................................................
+
+    // ----------------------------------------------------------
+    /**
+     * Creates a new Bigbar object.
+     */
+    public Bigbar()
+    {
+        //no work needed to be done here
+    }
+
+
+    //~ Methods ...............................................................
+
+
+}
