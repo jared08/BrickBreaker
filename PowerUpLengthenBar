@@ -1,0 +1,32 @@
+import sofia.micro.*;
+
+//-------------------------------------------------------------------------
+/**
+ *  No work is needed to be done in this class, because it is a subclass
+ *  of the PowerUp class, and simply inherits all of its traits.
+ *
+ *  @author jared-jared08
+ *  @version 2013.05.02
+ */
+public class Good extends PowerUp
+{
+    //~ Fields ................................................................
+
+
+
+    //~ Constructor ...........................................................
+
+    // ----------------------------------------------------------
+    /**
+     * Creates a new Good object.
+     */
+    public Good()
+    {
+        //nothing to do here
+    }
+
+
+    //~ Methods ...............................................................
+
+
+}
