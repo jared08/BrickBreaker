@@ -1,1 +1,207 @@
-test
+import sofia.micro.*;
+import sofia.util.Random;
+import sofia.graphics.*;
+import java.util.*;
+
+//-------------------------------------------------------------------------
+/**
+ *  The majority of the code is written in this class as the ball
+ *  is the actor that does the most work. This class moves the ball
+ *  throughout the world at different speeds, rebounds off walls, blocks, and
+ *  the bar at corresponding angles, and removes blocks.
+ *
+ *  @author jared-jared08
+ *  @version 2013.05.02
+ */
+public class Ball extends Actor
+{
+    //~ Fields ................................................................
+    private double speed = 0; 
+    Level level;
+    List count = new ArrayList<Integer>();
+    
+    //~ Constructor ...........................................................
+    // --------------------------------------------------------
+    /**
+     * Creates a new Ball object with a set speed 
+     * and direction.
+     */
+    public Ball()
+    {
+        speed = 0;
+        this.turn();
+    }
+
+    /**
+     * The act() method of the ball class moves the ball around
+     * at differing speeds based upon how many blocks remain. Also,
+     * it removes blocks if the ball intersects with it, bounces off
+     * the bar at a set angle if the ball intersects with it, and adds
+     * a power up to the world if a random integer is picked. Finally
+     * it uses varying methods defined in the class and states whether
+     * the user won or not based upon if bricks still remain or not.
+     */
+    public void act()
+    {
+        this.move((int) speed);        
+        Good good = new Good();
+        Bad bad = new Bad();        
+        int value = Random.generator().nextInt(10);
+        Brick brick = this.getOneIntersectingObject(Brick.class);
+        if (brick != null)
+        {            
+            count.add("X");
+            brick.remove();
+            if (value == 0)
+            {
+                getWorld().add(good, this.getGridX(), this.getGridY());
+            }
+            if (value == 1)
+            {
+                getWorld().add(bad, this.getGridX(), this.getGridY());
+            }           
+            double x = 360 - this.getRotation();
+            this.setRotation(x);
+            this.increaseSpeed();
+        }
+        Bar bar = this.getOneIntersectingObject(Bar.class);
+        if (bar != null)
+        {            
+            if (this.getGridX() == bar.getGridX())
+            {
+                this.turn(180);
+            }
+            if (this.getGridX() > bar.getGridX())
+            {
+                this.turn(210);
+            }
+            if (this.getGridX() < bar.getGridX())
+            {
+                this.turn(150);
+            }            
+        }
+        if (getWorld().getObjects(Brick.class).size() == 0)
+        {
+            TextShape text = new TextShape("Congratulations, you win!");
+            text.setTypeSize(75);
+            getWorld().add(text, 500, 300);
+            this.remove();            
+        }
+        this.turnAroundTop();
+        this.turnAroundLeft();
+        this.turnAroundRight();
+        this.dissapear();               
+    }
+    
+    /**
+     * Uses polymorphism to override the turn method to
+     * turn the object 90 degrees everytime turn is called.
+     */
+    public void turn()
+    {
+        this.turn(90);
+    }
+    
+    /**
+     * Sets the speed of the ball to 6 when the user
+     * presses down the space bar, in a way, starting the
+     * game.
+     */
+    public void dpadCenterIsDown()
+    {
+        speed = 6;
+    }            
+       
+    /**
+     * If the balls goes below a set y point, then game over
+     * is outputed and the ball is removed.
+     */
+    public void dissapear()
+    {
+        if (this.getGridY() > 580)
+        {            
+            TextShape text = new TextShape("Game Over");
+            text.setTypeSize(100);
+            getWorld().add(text, 500, 300);
+            this.remove();             
+        }
+    }
+    
+    /**
+     * Turns the ball around when it hits the ceiling at
+     * the corresponding angle that it hit at.
+     */
+    public void turnAroundTop()
+    {
+        if (this.getGridY() < 10)
+        {
+            double x = 360 - this.getRotation();
+            this.setRotation(x);            
+        }        
+    }
+    
+    /**
+     * Turns the ball when it hits the left wall at the 
+     * corresponding angle that it hit at.
+     */
+    public void turnAroundLeft()
+    {
+        if (this.getGridX() < 10)            
+        {
+            double x = 180 - this.getRotation();
+            this.setRotation(x);
+        }        
+    }
+    
+    /**
+     * Turns the ball when it hits the right wall at the
+     * corresponding angle that it hit at.
+     */
+    public void turnAroundRight()
+    {
+        if (this.getGridX() > 990) 
+        {
+            double x = 180 - this.getRotation();
+            this.setRotation(x);
+        }        
+    }
+    
+    /**
+     * Increases the speed of the ball based upon
+     * on how many bricks are left.
+     */
+    public void increaseSpeed()
+    {          
+        if (this.getGridY() == 500 && count.size() == 1
+            && this.getRotation() == 90)
+        {
+            speed = 0;
+        }
+        else if (count.size() < 5)
+        {
+            speed = 6;
+        }
+        else if (count.size() < 15)
+        {
+            speed = 8;
+        }
+        else if (count.size() < 25)
+        {
+            speed = 10;
+        }
+        else if (count.size() < 35)
+        {
+            speed = 12;
+        }
+        else
+        {
+            speed = 14;
+        }
+    }
+    
+    
+    
+
+    //~ Methods ...............................................................
+
+}
