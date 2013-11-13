@@ -1,0 +1,63 @@
+import sofia.micro.*;
+
+//-------------------------------------------------------------------------
+/**
+ *  The PowerUp class is a superclass, that creates no object
+ *  but only methods that the two subclasses, good and bad,
+ *  use in order to function.
+ *
+ *  @author jared-jared08
+ *  @version 2013.05.02
+ */
+public class PowerUp extends Actor
+{
+    //~ Fields ................................................................
+
+    private int speed = 5;
+
+    //~ Constructor ...........................................................
+
+    // ----------------------------------------------------------
+    /**
+     * Creates a new PowerUp object with a turn of 90.
+     */
+    public PowerUp()
+    {
+        this.turn();
+    }
+    
+    /**
+     * Moves the actor at a set speed of 5, as well
+     * as calls the dissapear method().
+     */
+    public void act()
+    {
+        this.move((int) speed);
+        this.dissapear();
+    }
+    
+    /**
+     * Uses polymorphism to override the turn method to
+     * turn the object 90 degrees everytime turn is called.
+     */
+    public void turn()
+    {
+        this.turn(90);
+    }
+    
+    /**
+     * Removes the actor from the world if it is greater
+     * than a certain y coordinate.
+     */
+    public void dissapear()
+    {
+        if (this.getGridY() > 580)
+        {
+            this.remove();           
+        }
+    }
+
+    //~ Methods ...............................................................
+
+
+}
