@@ -1,0 +1,58 @@
+import sofia.micro.*;
+import sofia.graphics.*;
+
+//-------------------------------------------------------------------------
+/**
+ *  Creates a world with blocks, a ball, and a bar in it,
+ *  using a nested for loop.
+ *
+ *  @author jared-jared08
+ *  @version 2013.05.02
+ */
+public class Level extends World
+{
+    //~ Fields ................................................................
+    Start start;
+
+    //~ Constructor ...........................................................
+
+    // ----------------------------------------------------------
+    /**
+     * Creates a new Level object, as well as populates it.
+     */
+    public Level()
+    {
+        super(1000, 600, 1);
+        this.populate();        
+    }
+    
+    /**
+     * Populates the level with blocks using a nested for loop,
+     * as well as a bar and a ball.
+     */
+    public void populate()
+    {
+        Bar bar = new Bar();
+        this.add(bar, 500, 530);
+        Ball ball = new Ball();       
+        this.add(ball, 500, 500);        
+        start = new Start();
+        this.add(start, 500, 300); 
+        for (int x = 50; x < 1000; x = x + 90)
+        {
+            for (int y = 20; y < 150; y = y + 36)
+            {
+                Brick brick = new Brick();                      
+                this.add(brick, x, y);               
+            }
+        }   
+    }
+        
+    
+    
+
+
+    //~ Methods ...............................................................
+
+
+}
