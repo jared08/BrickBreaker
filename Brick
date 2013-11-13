@@ -1,0 +1,33 @@
+import sofia.micro.*;
+
+//-------------------------------------------------------------------------
+/**
+ *  No work is needed to be done in the brick class. The sole
+ *  purpose of this class is to create a Brick object, in which
+ *  is called upon in other classes.
+ *
+ *  @author jared-jared08
+ *  @version 2013.05.02
+ */
+public class Brick extends Actor
+{
+    //~ Fields ................................................................
+
+
+
+    //~ Constructor ...........................................................
+
+    // ----------------------------------------------------------
+    /**
+     * Creates a new Brick object.
+     */
+    public Brick()
+    {
+        //no work needed to be done here
+    }
+
+
+    //~ Methods ...............................................................
+
+
+}
